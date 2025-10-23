@@ -40,16 +40,6 @@ The image remains official and light (Alpine).
 
 Works immediately on the first launch.
 
-## Connection from a local client
-
-Example (Adminer, DBeaver, psql…) :
-
-- `Host` : localhost
-- `Port` : 5432 (by default, not exposed, accessible by the Docker network)
-- `Database` : postgres_db
-- `User` : postgres_user
-- `Password` : password
-
 ## CLI 
 
 Run container : 
@@ -76,6 +66,20 @@ id |  name  |        email
 (4 rows)
 ```
 
+## Connection from a local client
+
+Example (Adminer, DBeaver, psql…) :
+
+- `Host` : localhost
+- `Port` : 5432 (by default, not exposed, accessible by the Docker network)
+- `Database` : postgres_db
+- `User` : postgres_user
+- `Password` : password
+
+---
+
 If needed to start from scratch the database, run this command before the `docker-compose up` (this, will delete volume) : 
 
 `docker-compose down -v`
+
+
