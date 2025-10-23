@@ -72,7 +72,8 @@ id |  name  |        email
   1 | Alice  | alice@example.com
   2 | Bob    | bob@example.com
   3 | Franck | franck@example.com
-(3 rows)
+  4 | Diana | diana@example.com
+(4 rows)
 ```
 
 If needed to start from scratch the database, run this command before the `docker-compose up` (this, will delete volume) : 
