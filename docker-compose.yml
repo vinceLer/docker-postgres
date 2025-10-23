@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres_container
+    restart: unless-stopped # Restart the container if it stops
+
+    environment:
+      POSTGRES_USER: postgres_user       # Database user
+      POSTGRES_PASSWORD: password        # Database password
+      POSTGRES_DB: postgres_db           # Database name
+      # Optional: secure authentication method
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
+
+    # Volumes
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persistent storage for PostgreSQL data
+      - ./postgres-init:/docker-entrypoint-initdb.d
+        # Any .sql or .sh files in this folder will be automatically executed
+        # the first time the container starts (if the volume is empty)
+
+    # Fix permissions automatically before starting PostgreSQL
+    entrypoint: ["/bin/sh", "-c", "chown -R postgres:postgres /var/lib/postgresql/data && exec docker-entrypoint.sh postgres"]
+    # chown ensures the postgres user has full access to the data directory
+    # exec launches the official PostgreSQL initialization script
+
+    # Healthcheck to make sure PostgreSQL is ready
+    healthcheck: 
+      test: ["CMD-SHELL", "pg_isready -U postgres_user"] # Checks if PostgreSQL is accepting connections
+      interval: 10s
+      timeout: 5s
+      retries: 5  # Container is marked unhealthy if this fails 5 times
+
+    # Network configuration
+    networks:
+      - backend # Containers on this network can communicate without exposing ports externally
+
+    # Temporary files in RAM for performance and security
+    tmpfs: 
+      - /var/run/postgresql
+      - /tmp
+
+    ports:
+      - "5432:5432" # Expose port 5432 for local connections (e.g., DBeaver, psql)
+
+networks:
+  backend:
+
+volumes:
+  postgres-data:

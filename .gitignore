@@ -1,0 +1,8 @@
+### Node ###
+# Logs
+logs
+*.log
+.pnpm-debug.log*
+
+# Dependency directories
+node_modules/
