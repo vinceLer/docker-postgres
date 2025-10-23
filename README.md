@@ -72,7 +72,7 @@ id |  name  |        email
   1 | Alice  | alice@example.com
   2 | Bob    | bob@example.com
   3 | Franck | franck@example.com
-  4 | Diana | diana@example.com
+  4 | Diana  | diana@example.com
 (4 rows)
 ```
 
